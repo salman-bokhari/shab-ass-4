@@ -79,3 +79,7 @@ def is_number(s: str) -> bool:
         return True
     except ValueError:
         return False
+
+if __name__ == "__main__":  # pragma: no cover
+    repl()  # pragma: no cover
+
