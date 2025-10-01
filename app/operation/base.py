@@ -1,13 +1,9 @@
-"""Base operation definitions."""
-from abc import ABC, abstractmethod
+import pytest
+from app.operation.base import OperationBase
 
-class OperationBase(ABC):
-    name = 'base'
-
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
-
-    @abstractmethod
-    def compute(self, a, b):
-        raise NotImplementedError
+def test_base_compute_not_implemented():
+    class DummyOp(OperationBase):
+        pass
+    op = DummyOp(1, 2)
+    with pytest.raises(NotImplementedError):
+        op.compute(1, 2)
