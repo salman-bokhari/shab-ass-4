@@ -18,4 +18,4 @@ class OperationBase(ABC):
         Perform the operation on a and b.
         Must be implemented by subclasses.
         """
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no cover
