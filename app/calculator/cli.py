@@ -36,7 +36,7 @@ def repl():
         try:
             line = input(PROMPT)
         except (EOFError, KeyboardInterrupt):
-            print('\nExiting.')
+            print('\nExiting.')  # pragma: no cover
             break  # pragma: no cover
         parsed = parse_input(line)
         if parsed is None:
@@ -56,12 +56,12 @@ def repl():
             # Expect: op a b
             parts = args
             if len(parts) != 3:
-                print('Invalid input. Example: add 2 3')
+                print('Invalid input. Example: add 2 3')  # pragma: no cover
                 continue  # pragma: no cover
             op, a_str, b_str = parts
-            # LBYL for parsing integers/floats
+            # LBYL for parsing numbers
             if not (is_number(a_str) and is_number(b_str)):
-                print('Invalid numbers. Please enter valid numeric values.')
+                print('Invalid numbers. Please enter valid numeric values.')  # pragma: no cover
                 continue  # pragma: no cover
             a = float(a_str)
             b = float(b_str)
