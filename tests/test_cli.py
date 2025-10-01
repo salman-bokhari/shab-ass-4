@@ -58,6 +58,6 @@ def test_history(monkeypatch, capsys):
     inputs = ["add 1 2", "sub 5 3", "history", "exit"]
     run_repl(monkeypatch, inputs)
     out, _ = capsys.readouterr()
-    # Your REPL should list previous calculations
-    assert "1.0 + 2.0" in out or "5.0 - 3.0" in out
-
+    # Match exact format your REPL prints in history
+    assert "1: add(1.0, 2.0) = 3.0" in out
+    assert "2: sub(5.0, 3.0) = 2.0" in out
