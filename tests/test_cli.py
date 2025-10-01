@@ -8,9 +8,7 @@ def run_repl(monkeypatch, inputs):
         cli.repl()
 
 def test_help_and_exit(monkeypatch):
-    inputs = ["help", "exit"]
-    # simulate StopIteration at end to exit loop
-    inputs.append(StopIteration)
+    inputs = ["help", "exit", StopIteration]
     run_repl(monkeypatch, inputs)
 
 def test_addition(monkeypatch, capsys):
@@ -29,4 +27,10 @@ def test_division_by_zero(monkeypatch, capsys):
     out, _ = capsys.readouterr()
     assert "Cannot divide by zero" in out
 
-def test
+def test_invalid_command(monkeypatch, capsys):
+    inputs = ["foobar", "exit"]
+    monkeypatch.setattr("builtins.input", lambda _: inputs.pop(0))
+    with pytest.raises(SystemExit, match=None):
+        cli.repl()
+    out, _ = capsys.readouterr()
+    assert "Invalid input" in out or "Unknown" in out
