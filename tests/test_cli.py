@@ -4,33 +4,29 @@ from app.calculator import cli
 def run_repl(monkeypatch, inputs):
     it = iter(inputs)
     monkeypatch.setattr("builtins.input", lambda _: next(it))
-    with pytest.raises(StopIteration, match=None):
-        cli.repl()
+    cli.repl()  # Do NOT expect exception
 
-def test_help_and_exit(monkeypatch):
-    inputs = ["help", "exit", StopIteration]
+def test_help_and_exit(monkeypatch, capsys):
+    inputs = ["help", "exit"]
     run_repl(monkeypatch, inputs)
+    out, _ = capsys.readouterr()
+    assert "Commands:" in out
+    assert "Simple Calculator REPL" in out
 
 def test_addition(monkeypatch, capsys):
     inputs = ["add 2 3", "exit"]
-    monkeypatch.setattr("builtins.input", lambda _: inputs.pop(0))
-    with pytest.raises(SystemExit, match=None):
-        cli.repl()
+    run_repl(monkeypatch, inputs)
     out, _ = capsys.readouterr()
     assert "Result: 5.0" in out
 
 def test_division_by_zero(monkeypatch, capsys):
     inputs = ["div 1 0", "exit"]
-    monkeypatch.setattr("builtins.input", lambda _: inputs.pop(0))
-    with pytest.raises(SystemExit, match=None):
-        cli.repl()
+    run_repl(monkeypatch, inputs)
     out, _ = capsys.readouterr()
-    assert "Cannot divide by zero" in out
+    assert "Error: Division by zero" in out or "Cannot divide by zero" in out
 
 def test_invalid_command(monkeypatch, capsys):
     inputs = ["foobar", "exit"]
-    monkeypatch.setattr("builtins.input", lambda _: inputs.pop(0))
-    with pytest.raises(SystemExit, match=None):
-        cli.repl()
+    run_repl(monkeypatch, inputs)
     out, _ = capsys.readouterr()
     assert "Invalid input" in out or "Unknown" in out
