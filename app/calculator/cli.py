@@ -53,13 +53,11 @@ def repl():
             print('Goodbye.')
             break  # pragma: no cover
         if cmd == 'calc':
-            # Expect: op a b
             parts = args
             if len(parts) != 3:
                 print('Invalid input. Example: add 2 3')  # pragma: no cover
                 continue  # pragma: no cover
             op, a_str, b_str = parts
-            # LBYL for parsing numbers
             if not (is_number(a_str) and is_number(b_str)):
                 print('Invalid numbers. Please enter valid numeric values.')  # pragma: no cover
                 continue  # pragma: no cover
@@ -71,12 +69,11 @@ def repl():
                 history.add(calc)
                 print(result)
             except Exception as exc:
-                # EAFP style handling for operation errors
                 print(f'Error: {exc}')  # pragma: no cover
                 continue  # pragma: no cover
 
 def is_number(s: str) -> bool:
-    """LBYL example: check format before conversion."""
+    """Check format before conversion."""
     try:
         float(s)
         return True
