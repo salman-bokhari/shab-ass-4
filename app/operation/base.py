@@ -1,9 +1,21 @@
-import pytest
-from app.operation.base import OperationBase
+# app/operation/base.py
+from abc import ABC, abstractmethod
 
-def test_base_compute_not_implemented():
-    class DummyOp(OperationBase):
-        pass
-    op = DummyOp(1, 2)
-    with pytest.raises(NotImplementedError):
-        op.compute(1, 2)
+class OperationBase(ABC):
+    """
+    Abstract base class for all operations.
+    Subclasses must implement the compute method.
+    """
+    name = "base"
+
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    @abstractmethod
+    def compute(self, a, b):
+        """
+        Perform the operation on a and b.
+        Must be implemented by subclasses.
+        """
+        raise NotImplementedError
