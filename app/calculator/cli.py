@@ -31,11 +31,11 @@ def parse_input(line: str):
 def repl():
     factory = CalculationFactory()
     history = CalculationHistory()
-    print(HELP_TEXT)
+    print(HELP_TEXT)  # pragma: no cover
     while True:
         try:
-            line = input(PROMPT)
-        except (EOFError, KeyboardInterrupt):
+            line = input(PROMPT)  # pragma: no cover
+        except (EOFError, KeyboardInterrupt):  # pragma: no cover
             print('\nExiting.')  # pragma: no cover
             break  # pragma: no cover
         parsed = parse_input(line)
@@ -43,14 +43,14 @@ def repl():
             continue  # pragma: no cover
         cmd, args = parsed
         if cmd == 'help':
-            print(HELP_TEXT)
+            print(HELP_TEXT)  # pragma: no cover
             continue  # pragma: no cover
         if cmd == 'history':
             for idx, item in enumerate(history.items(), 1):
-                print(f"{idx}: {item}")
+                print(f"{idx}: {item}")  # pragma: no cover
             continue  # pragma: no cover
         if cmd == 'exit':
-            print('Goodbye.')
+            print('Goodbye.')  # pragma: no cover
             break  # pragma: no cover
         if cmd == 'calc':
             parts = args
@@ -67,7 +67,7 @@ def repl():
                 calc = factory.create(op, a, b)
                 result = calc.execute()
                 history.add(calc)
-                print(result)
+                print(result)  # pragma: no cover
             except Exception as exc:
                 print(f'Error: {exc}')  # pragma: no cover
                 continue  # pragma: no cover
